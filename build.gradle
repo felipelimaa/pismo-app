@@ -18,6 +18,7 @@ dependencies {
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.codehaus.groovy:groovy'
 	runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
