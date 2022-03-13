@@ -2,7 +2,7 @@ package io.pismo.app.service
 
 import io.pismo.app.dto.TransactionsDTO
 import io.pismo.app.exception.TransactionsEmptyValueException
-import io.pismo.app.exception.TransactionsValueLessThanZero
+import io.pismo.app.exception.TransactionsValueLessThanZeroException
 import io.pismo.app.model.Transactions
 import io.pismo.app.repository.TransactionsRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -32,7 +32,7 @@ class TransactionsService {
         }
 
         if(transactionsDTO.amount <= 0) {
-            throw new TransactionsValueLessThanZero()
+            throw new TransactionsValueLessThanZeroException()
         }
 
         def accounts = accountsService.findById(transactionsDTO.accountId)

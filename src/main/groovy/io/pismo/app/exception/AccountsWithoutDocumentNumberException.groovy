@@ -1,10 +1,11 @@
 package io.pismo.app.exception
 
-import org.springframework.http.HttpStatus
 import org.springframework.web.server.ResponseStatusException
+
+import static io.pismo.app.exception.ProblemType.*
 
 class AccountsWithoutDocumentNumberException extends ResponseStatusException{
     AccountsWithoutDocumentNumberException() {
-        super(HttpStatus.BAD_REQUEST, "Document number is required")
+        super(ACCOUNT_WITHOUT_DOCUMENT_NUMBER.status, ACCOUNT_WITHOUT_DOCUMENT_NUMBER.message)
     }
 }

@@ -1,10 +1,11 @@
 package io.pismo.app.exception
 
-import org.springframework.http.HttpStatus
 import org.springframework.web.server.ResponseStatusException
+
+import static io.pismo.app.exception.ProblemType.*
 
 class AccountsNotFoundException extends ResponseStatusException {
     AccountsNotFoundException() {
-        super(HttpStatus.NOT_FOUND, "Accounts not found!")
+        super(ACCOUNT_NOT_FOUND.status, ACCOUNT_NOT_FOUND.message)
     }
 }
