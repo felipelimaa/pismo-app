@@ -16,12 +16,6 @@ import static org.junit.jupiter.api.Assertions.*
 
 class TransactionsServiceTest extends AppApplicationTests {
 
-    //todo: create transaction with success
-    //todo: create transaction with invalid operational type
-    //todo: create transaction with invalid account id
-    //todo: create transaction with value less than zero
-    //todo: create transaction with null value amount
-
     @Autowired
     AccountsRepository accountsRepository
 
@@ -115,8 +109,6 @@ class TransactionsServiceTest extends AppApplicationTests {
     @Test
     void Transactions_TestCreateWithEmptyValue(){
         clearDb()
-
-        Accounts account = accountsService.create(createBaseAccountObject())
 
         TransactionsDTO transactionsDTO = new TransactionsDTO()
 
