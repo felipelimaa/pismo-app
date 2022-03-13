@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  postgres-server:
+    container_name: postgres-server
+    image: postgres:14
+    environment:
+      POSTGRES_USER: pismo
+      POSTGRES_PASSWORD: pismo
+      POSTGRES_DB: app
+    ports:
+      - "5432:5432"
+    networks:
+      - pismo-network
+  pismo-app:
+    container_name: pismo-app
+    build: .
+    environment:
+      POSTGRESQL_URL: jdbc:postgresql://postgres-server:5432/app
+      POSTGRESQL_USER: pismo
+      POSTGRESQL_PASSWORD: pismo
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-server
+    networks:
+      - pismo-network
+networks:
+  pismo-network:
+    driver: bridge
