@@ -1,5 +1,6 @@
 package io.pismo.app.service
 
+import io.pismo.app.exception.AccountsExistsDocumentNumberException
 import io.pismo.app.exception.AccountsNotFoundException
 import io.pismo.app.exception.AccountsWithoutDocumentNumberException
 import io.pismo.app.model.Accounts
@@ -21,8 +22,12 @@ class AccountsService {
 
     @Transactional
     Accounts create(Accounts accounts) {
-        if(accountsRepository.findFirstByDocumentNumber(accounts.documentNumber)) {
+        if(!accounts.documentNumber) {
             throw new AccountsWithoutDocumentNumberException()
+        }
+
+        if(accountsRepository.findFirstByDocumentNumber(accounts.documentNumber)) {
+            throw new AccountsExistsDocumentNumberException()
         }
 
         return accountsRepository.save(accounts)

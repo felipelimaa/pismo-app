@@ -5,6 +5,6 @@ import org.springframework.web.server.ResponseStatusException
 
 class AccountsWithoutDocumentNumberException extends ResponseStatusException{
     AccountsWithoutDocumentNumberException() {
-        super(HttpStatus.CONFLICT, "Already exists a document number")
+        super(HttpStatus.CONFLICT, "Document number is required")
     }
 }
