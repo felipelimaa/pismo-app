@@ -5,6 +5,7 @@ import io.pismo.app.AppApplicationTests
 import io.pismo.app.model.Accounts
 import io.pismo.app.repository.AccountsRepository
 import io.pismo.app.service.AccountsService
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -30,8 +31,11 @@ class AccountsControllerTest extends AppApplicationTests {
     @Autowired
     AccountsRepository accountsRepository
 
-    private clearDb() {
-        accountsRepository.deleteAll()
+    Accounts accounts
+
+    @BeforeEach
+    void clearDb() {
+        accounts = accountsRepository.deleteAll()
     }
 
     private static createBaseAccountObject() {
@@ -40,8 +44,6 @@ class AccountsControllerTest extends AppApplicationTests {
 
     @Test
     void Accounts_TestCreateWithSuccess() {
-        clearDb()
-
         Accounts account = createBaseAccountObject()
 
         def response = mvc
@@ -63,8 +65,6 @@ class AccountsControllerTest extends AppApplicationTests {
 
     @Test
     void Accounts_TestCreateWithExistsDocumentNumber(){
-        clearDb()
-
         Accounts account = createBaseAccountObject()
 
         accountsService.create(account)
@@ -84,8 +84,6 @@ class AccountsControllerTest extends AppApplicationTests {
 
     @Test
     void Accounts_TestCreateWithoutDocumentNumber(){
-        clearDb()
-
         Accounts account = new Accounts(documentNumber: null)
 
         def response = mvc
@@ -103,7 +101,6 @@ class AccountsControllerTest extends AppApplicationTests {
 
     @Test
     void Accounts_TestCreateAndRecoveryId() {
-        clearDb()
         Accounts accounts = createBaseAccountObject()
 
         Accounts accountCreated = accountsService.create(accounts)
@@ -123,8 +120,6 @@ class AccountsControllerTest extends AppApplicationTests {
 
     @Test
     void Accounts_TestRecoveryInvalidId(){
-        clearDb()
-
         def response = mvc
             .perform(get("/accounts/${Integer.MAX_VALUE}"))
             .andDo(MockMvcResultHandlers.print())

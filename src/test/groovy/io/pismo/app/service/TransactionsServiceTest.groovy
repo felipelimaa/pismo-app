@@ -7,8 +7,10 @@ import io.pismo.app.exception.InvalidOperationalTypesException
 import io.pismo.app.exception.TransactionsEmptyValueException
 import io.pismo.app.exception.TransactionsValueLessThanZeroException
 import io.pismo.app.model.Accounts
+import io.pismo.app.model.Transactions
 import io.pismo.app.repository.AccountsRepository
 import io.pismo.app.repository.TransactionsRepository
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -28,9 +30,14 @@ class TransactionsServiceTest extends AppApplicationTests {
     @Autowired
     TransactionsService transactionsService
 
-    private clearDb() {
-        transactionsRepository.deleteAll()
-        accountsRepository.deleteAll()
+    Transactions transactions
+
+    Accounts accounts
+
+    @BeforeEach
+    void clearDb() {
+        transactions = transactionsRepository.deleteAll()
+        accounts = accountsRepository.deleteAll()
     }
 
     private static createBaseAccountObject() {
@@ -43,8 +50,6 @@ class TransactionsServiceTest extends AppApplicationTests {
 
     @Test
     void Transactions_TestCreateWithSuccess() {
-        clearDb()
-
         Accounts account = accountsService.create(createBaseAccountObject())
 
         TransactionsDTO transactionsDTO = createBaseTransactionDTOObject(account.id, 4, new BigDecimal(10))
@@ -60,8 +65,6 @@ class TransactionsServiceTest extends AppApplicationTests {
 
     @Test
     void Transactions_TestCreateWithNegativeOperationSuccess() {
-        clearDb()
-
         Accounts account = accountsService.create(createBaseAccountObject())
 
         TransactionsDTO transactionsDTO = createBaseTransactionDTOObject(account.id, 1, new BigDecimal(10))
@@ -77,8 +80,6 @@ class TransactionsServiceTest extends AppApplicationTests {
 
     @Test
     void Transactions_TestCreateWithInvalidOperationalType() {
-        clearDb()
-
         Accounts account = accountsService.create(createBaseAccountObject())
 
         TransactionsDTO transactionsDTO = createBaseTransactionDTOObject(account.id, Integer.MAX_VALUE, new BigDecimal(10))
@@ -88,8 +89,6 @@ class TransactionsServiceTest extends AppApplicationTests {
 
     @Test
     void Transactions_TestCreateWithInvalidAccountId() {
-        clearDb()
-
         TransactionsDTO transactionsDTO = createBaseTransactionDTOObject(Integer.MAX_VALUE, 1, new BigDecimal(10))
 
         assertThrows( AccountsNotFoundException.class, { transactionsService.create(transactionsDTO) } )
@@ -97,8 +96,6 @@ class TransactionsServiceTest extends AppApplicationTests {
 
     @Test
     void Transactions_TestCreateWithValueLessThanZero() {
-        clearDb()
-
         Accounts account = accountsService.create(createBaseAccountObject())
 
         TransactionsDTO transactionsDTO = createBaseTransactionDTOObject(account.id, 1, new BigDecimal(-10))
@@ -108,8 +105,6 @@ class TransactionsServiceTest extends AppApplicationTests {
 
     @Test
     void Transactions_TestCreateWithEmptyValue(){
-        clearDb()
-
         TransactionsDTO transactionsDTO = new TransactionsDTO()
 
         assertThrows( TransactionsEmptyValueException.class, { transactionsService.create( transactionsDTO) } )

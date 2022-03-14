@@ -6,6 +6,7 @@ import io.pismo.app.exception.AccountsNotFoundException
 import io.pismo.app.exception.AccountsWithoutDocumentNumberException
 import io.pismo.app.model.Accounts
 import io.pismo.app.repository.AccountsRepository
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -19,8 +20,11 @@ class AccountsServiceTest extends AppApplicationTests {
     @Autowired
     AccountsRepository accountsRepository
 
-    private clearDb() {
-        accountsRepository.deleteAll()
+    Accounts accounts
+
+    @BeforeEach
+    void clearDb() {
+        accounts = accountsRepository.deleteAll()
     }
 
     private static createBaseAccountObject() {
@@ -29,8 +33,6 @@ class AccountsServiceTest extends AppApplicationTests {
 
     @Test
     void Accounts_TestCreateWithSuccess(){
-        clearDb()
-
         Accounts account = createBaseAccountObject()
         Accounts accountCreated = accountsService.create(account)
 
@@ -41,7 +43,6 @@ class AccountsServiceTest extends AppApplicationTests {
 
     @Test
     void Accounts_TestCreateWithExistsDocumentNumber(){
-        clearDb()
         Accounts account = createBaseAccountObject()
         accountsService.create(account)
 
@@ -50,7 +51,6 @@ class AccountsServiceTest extends AppApplicationTests {
 
     @Test
     void Accounts_TestCreateWithoutDocumentNumber(){
-        clearDb()
         Accounts account = new Accounts(documentNumber: null)
 
         assertThrows(AccountsWithoutDocumentNumberException.class, { accountsService.create(account) })
@@ -58,7 +58,6 @@ class AccountsServiceTest extends AppApplicationTests {
 
     @Test
     void Accounts_TestCreateAndRecoveryId(){
-        clearDb()
         Accounts account = createBaseAccountObject()
         Accounts accountCreated = accountsService.create(account)
         Accounts accountRecovered = accountsService.findById(accountCreated.id)
