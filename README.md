@@ -50,3 +50,7 @@ Caso deseje executar o projeto completo, com a build e ambiente de execução, b
 ```
 docker-compose up -d 
 ```
+
+Adicionei ao projeto dois arquivos com extensão `.http` para facilitar as requisições à API.
+
+Os arquivos estão disposníveis no repositório `requests`, na raiz deste projeto, e podem ser utilizados dentro do VSCode em conjunto com a extensão `RestClient` (https://marketplace.visualstudio.com/items?itemName=humao.rest-client).

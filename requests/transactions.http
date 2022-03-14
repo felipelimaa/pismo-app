@@ -1,0 +1,45 @@
+### Criando uma transação, contendo os dados do DTO (conta, tipo de operação e valor da transação).
+POST http://localhost:8080/transactions
+Content-Type: application/json
+
+{
+  "account_id": 1,
+  "operation_type_id": 1,
+  "amount": 50
+}
+
+### Tentativa de criar uma transação sem conteúdo o qual se espera o retorno de um erro
+POST http://localhost:8080/transactions
+Content-Type: application/json
+
+{}
+
+### Tentativa de criar uma transação com valor da transação negativo, o qual se espera o retorno de um erro
+POST http://localhost:8080/transactions
+Content-Type: application/json
+
+{
+  "account_id": 1,
+  "operation_type_id": 1,
+  "amount": -50
+}
+
+### Tentativa de criar uma transação com uma conta (account) inválida, o qual se espera o retorno de um erro
+POST http://localhost:8080/transactions
+Content-Type: application/json
+
+{
+  "account_id": 999999,
+  "operation_type_id": 1,
+  "amount": 50
+}
+
+### Tentativa de criar uma transação com um tipo de operação inválida (operational type), o qual se espera o retorno de um erro
+POST http://localhost:8080/transactions
+Content-Type: application/json
+
+{
+  "account_id": 1,
+  "operation_type_id": 9999,
+  "amount": 50
+}

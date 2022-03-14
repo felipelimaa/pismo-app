@@ -1,0 +1,29 @@
+### Criação de uma conta (Account).
+
+POST http://localhost:8080/accounts
+Content-Type: application/json
+
+{
+    "document_number": "12345678900"
+}
+
+### Validar erro caso tente cadastrar uma conta vazia.
+POST http://localhost:8080/accounts
+Content-Type: application/json
+
+{
+}
+
+### Validar erro caso tente cadastrar uma conta já existente.
+POST http://localhost:8080/accounts
+Content-Type: application/json
+
+{
+    "document_number": "12345678900"
+}
+
+### Buscando uma conta existente.
+GET http://localhost:8080/accounts/1
+Content-Type: application/json
+
+
