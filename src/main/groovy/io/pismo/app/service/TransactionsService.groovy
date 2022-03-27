@@ -1,6 +1,7 @@
 package io.pismo.app.service
 
 import io.pismo.app.dto.TransactionsDTO
+import io.pismo.app.exception.AccountWithoutCreditAvailableException
 import io.pismo.app.exception.TransactionsEmptyValueException
 import io.pismo.app.exception.TransactionsValueLessThanZeroException
 import io.pismo.app.model.Transactions
@@ -46,13 +47,23 @@ class TransactionsService {
             calculatedValue *= -1
         }
 
+        def transactionAccountLimit = accounts.creditLimit + calculatedValue
+
+        if(transactionAccountLimit < 0) {
+            throw new AccountWithoutCreditAvailableException()
+        }
+
+
         transactions.amount = calculatedValue
         transactionsDTO.amount = calculatedValue
+
+        accountsService.alterCreditLimit(accounts, transactionAccountLimit)
 
         transactionsRepository.save(transactions)
 
         transactionsDTO.id = transactions.id
         transactionsDTO.eventDate = transactions.eventDate
+        transactionsDTO.creditLimit = transactionAccountLimit
 
         return transactionsDTO
     }

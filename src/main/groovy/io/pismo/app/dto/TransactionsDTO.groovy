@@ -19,4 +19,7 @@ class TransactionsDTO {
     @JsonProperty(value = "eventdate")
     Date eventDate
 
+    @JsonProperty(value = "credit_limit")
+    BigDecimal creditLimit
+
 }

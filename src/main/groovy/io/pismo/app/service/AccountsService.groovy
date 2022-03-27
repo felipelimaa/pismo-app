@@ -17,6 +17,10 @@ class AccountsService {
     AccountsRepository accountsRepository
 
     Accounts findById(Long id) {
+        if(!id){
+            throw new AccountsNotFoundException()
+        }
+
         return accountsRepository.findById(id).orElseThrow{new AccountsNotFoundException()}
     }
 
@@ -31,6 +35,12 @@ class AccountsService {
         }
 
         return accountsRepository.save(accounts)
+    }
+
+    void alterCreditLimit(Accounts accounts, BigDecimal creditLimit) {
+        accounts.creditLimit = creditLimit
+
+        accountsRepository.save(accounts)
     }
 
 }

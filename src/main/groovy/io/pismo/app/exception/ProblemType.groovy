@@ -8,7 +8,8 @@ enum ProblemType {
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, "Accounts not found!"),
     OPERATIONAL_TYPES_INVALID(HttpStatus.NOT_FOUND, "Operational Types not found!"),
     TRANSACTION_EMPTY_VALUE(HttpStatus.BAD_REQUEST, "Fields required is empty in transaction."),
-    TRANSACTION_VALUE_LESS_THAN_ZERO(HttpStatus.BAD_REQUEST, "The value of transaction is less than zero")
+    TRANSACTION_VALUE_LESS_THAN_ZERO(HttpStatus.BAD_REQUEST, "The value of transaction is less than zero"),
+    ACCOUNT_WITHOUT_CREDIT_AVAILABLE(HttpStatus.BAD_REQUEST, "Account without credit limit available")
 
     HttpStatus status
 
