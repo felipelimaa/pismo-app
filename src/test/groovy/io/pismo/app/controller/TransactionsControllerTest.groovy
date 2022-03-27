@@ -177,4 +177,21 @@ class TransactionsControllerTest extends AppApplicationTests{
         assertEquals(response.errorMessage, TRANSACTION_EMPTY_VALUE.message)
     }
 
+    @Test
+    void Transactions_TestCreateWithNullAcountId(){
+        TransactionsDTO transactionsDTO = createBaseTransactionDTOObject(null, 1, new BigDecimal(10))
+
+        def response = mvc
+            .perform(
+                post("/transactions")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(transactionsDTO))
+            )
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(status().isNotFound())
+            .andReturn().response
+
+        assertEquals(response.errorMessage, ACCOUNT_NOT_FOUND.message)
+    }
+
 }

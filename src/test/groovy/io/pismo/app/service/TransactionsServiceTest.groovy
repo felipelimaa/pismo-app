@@ -110,6 +110,13 @@ class TransactionsServiceTest extends AppApplicationTests {
         assertThrows( TransactionsEmptyValueException.class, { transactionsService.create( transactionsDTO) } )
     }
 
+    @Test
+    void Transactions_TestCreateWithNullAcountId(){
+        TransactionsDTO transactionsDTO = createBaseTransactionDTOObject(null, 1, new BigDecimal(10))
+
+        assertThrows( AccountsNotFoundException.class, { transactionsService.create(transactionsDTO) } )
+    }
+
 
 
 }
